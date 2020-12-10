@@ -1,8 +1,9 @@
 import { promotions, headerInfo } from "./data.js";
 
 (function createTableFromJSON() {
-   let numberOfPromotions = promotions.length;
    _checkVersions(promotions);
+   let groupedByEvents = _groupByEvent(promotions, "eventName");
+   console.log(groupedByEvents);
 
    let promotionProperties = Object.keys(promotions[0]);
 
@@ -59,41 +60,31 @@ import { promotions, headerInfo } from "./data.js";
       tr.appendChild(th);
    });
 
-   // Add the grouping and aggregation data - This is going to be hard to implement in Production...  For now, let's hardcode this !!
-   let groupTbody = document.createElement("tbody");
-   let groupTr = groupTbody.insertRow();
-   let groupCell = groupTr.insertCell();
-   groupCell.innerHTML = `${
-      promotions[0].eventName
-   }: <b>${_sumOfProjectedRetail(promotions[0].eventName)}</b>`;
-   table.appendChild(groupTbody);
+   Object.values(groupedByEvents).forEach((promotionsByEvent, index) => {
+      let groupTbody = document.createElement("tbody");
+      let groupTr = groupTbody.insertRow();
+      let groupCell = groupTr.insertCell();
+      groupCell.innerHTML = `${
+         promotionsByEvent[index].eventName
+      }: <b>${_sumOfProjectedRetail(promotionsByEvent[index].eventName)}</b>`;
+      table.appendChild(groupTbody);
 
-   // Add JSON data as rows to the table
-   let tbody = document.createElement("tbody");
-   promotions.forEach((promotion, index) => {
-      tr = tbody.insertRow();
-      // tr.style.borderBottom = "1px solid #dddddd";
+      // Add JSON data as rows to the table
+      let tbody = document.createElement("tbody");
+      promotionsByEvent.forEach((promotion, index) => {
+         tr = tbody.insertRow();
 
-      /* if (index === 3) {
-         tr.style.fontWeight = "bold";
-         tr.style.color = "#009879";
-      } */
+         if (index % 2 === 0) {
+            tr.style.backgroundColor = "#f0f0f0";
+         }
 
-      if (index % 2 === 0) {
-         tr.style.backgroundColor = "#f0f0f0";
-      }
-
-      /* if (index === numberOfPromotions - 1) {
-         tr.style.borderBottom = "2px solid #009879";
-      } */
-
-      promotionProperties.forEach((promotionProperty) => {
-         switch (promotionProperty) {
-            case "size": {
-               let cell = tr.insertCell();
-               cell.style.padding = "12px 15px";
-               cell.style.border = "1px solid black";
-               let cellValue = `
+         promotionProperties.forEach((promotionProperty) => {
+            switch (promotionProperty) {
+               case "size": {
+                  let cell = tr.insertCell();
+                  cell.style.padding = "12px 15px";
+                  cell.style.border = "1px solid black";
+                  let cellValue = `
                     ${promotion["size"]} <br>
                     ${promotion["desc1"] ? promotion["desc1"] + "<br>" : ""}
                     ${promotion["desc2"] ? promotion["desc2"] + "<br>" : ""}
@@ -111,31 +102,31 @@ import { promotions, headerInfo } from "./data.js";
                     ${promotion["fsi"] ? promotion["fsi"] + "<br>" : ""}
                     <br>
                 `;
-               cell.innerHTML = cellValue;
-               break;
-            }
+                  cell.innerHTML = cellValue;
+                  break;
+               }
 
-            case "projectedRetail": {
-               let cell = tr.insertCell();
-               cell.style.padding = "12px 15px";
-               cell.style.textAlign = "center";
-               cell.style.verticalAlign = "middle";
-               cell.style.border = "1px solid black";
-               let cellValue = `
+               case "projectedRetail": {
+                  let cell = tr.insertCell();
+                  cell.style.padding = "12px 15px";
+                  cell.style.textAlign = "center";
+                  cell.style.verticalAlign = "middle";
+                  cell.style.border = "1px solid black";
+                  let cellValue = `
                     ${_formatCurrency(promotion["projectedRetail"])}
                 `;
-               cell.innerHTML = cellValue;
-               break;
-            }
+                  cell.innerHTML = cellValue;
+                  break;
+               }
 
-            case "hasAdditionalCoupon": {
-               let cell = tr.insertCell();
-               cell.style.padding = "12px 15px";
-               cell.style.textAlign = "center";
-               cell.style.verticalAlign = "middle";
-               cell.style.border = "1px solid black";
+               case "hasAdditionalCoupon": {
+                  let cell = tr.insertCell();
+                  cell.style.padding = "12px 15px";
+                  cell.style.textAlign = "center";
+                  cell.style.verticalAlign = "middle";
+                  cell.style.border = "1px solid black";
 
-               let cellValue = `
+                  let cellValue = `
                          ${
                             promotion["additionalCoupon1"]
                                ? "<br>" + promotion["additionalCoupon1"]
@@ -147,19 +138,19 @@ import { promotions, headerInfo } from "./data.js";
                                : ""
                          }
                      `;
-               cell.innerHTML = cellValue;
+                  cell.innerHTML = cellValue;
 
-               break;
-            }
+                  break;
+               }
 
-            case "adzone1SalesRetail": {
-               let cell = tr.insertCell();
-               cell.style.padding = "12px 15px";
-               cell.style.textAlign = "center";
-               cell.style.verticalAlign = "middle";
-               cell.style.border = "1px solid black";
+               case "adzone1SalesRetail": {
+                  let cell = tr.insertCell();
+                  cell.style.padding = "12px 15px";
+                  cell.style.textAlign = "center";
+                  cell.style.verticalAlign = "middle";
+                  cell.style.border = "1px solid black";
 
-               let cellValue = `
+                  let cellValue = `
                          ${
                             promotion["adzone1SalesRetail"]
                                ? _formatCurrency(
@@ -184,19 +175,19 @@ import { promotions, headerInfo } from "./data.js";
                                : ""
                          }
                      `;
-               cell.innerHTML = cellValue;
+                  cell.innerHTML = cellValue;
 
-               break;
-            }
+                  break;
+               }
 
-            case "adzone2SalesRetail": {
-               let cell = tr.insertCell();
-               cell.style.padding = "12px 15px";
-               cell.style.textAlign = "center";
-               cell.style.verticalAlign = "middle";
-               cell.style.border = "1px solid black";
+               case "adzone2SalesRetail": {
+                  let cell = tr.insertCell();
+                  cell.style.padding = "12px 15px";
+                  cell.style.textAlign = "center";
+                  cell.style.verticalAlign = "middle";
+                  cell.style.border = "1px solid black";
 
-               let cellValue = `
+                  let cellValue = `
                           ${
                              promotion["adzone2SalesRetail"]
                                 ? _formatCurrencyWithVersion(
@@ -225,19 +216,19 @@ import { promotions, headerInfo } from "./data.js";
                                 : ""
                           }
                       `;
-               cell.innerHTML = cellValue;
+                  cell.innerHTML = cellValue;
 
-               break;
-            }
+                  break;
+               }
 
-            case "adzone3SalesRetail": {
-               let cell = tr.insertCell();
-               cell.style.padding = "12px 15px";
-               cell.style.textAlign = "center";
-               cell.style.verticalAlign = "middle";
-               cell.style.border = "1px solid black";
+               case "adzone3SalesRetail": {
+                  let cell = tr.insertCell();
+                  cell.style.padding = "12px 15px";
+                  cell.style.textAlign = "center";
+                  cell.style.verticalAlign = "middle";
+                  cell.style.border = "1px solid black";
 
-               let cellValue = `
+                  let cellValue = `
                             ${
                                promotion["adzone3SalesRetail"]
                                   ? _formatCurrencyWithVersion(
@@ -266,16 +257,16 @@ import { promotions, headerInfo } from "./data.js";
                                   : ""
                             }
                                     `;
-               cell.innerHTML = cellValue;
+                  cell.innerHTML = cellValue;
 
-               break;
-            }
+                  break;
+               }
 
-            case "adzone4SalesRetail": {
-               let cell = tr.insertCell();
-               cell.style.padding = "12px 15px";
+               case "adzone4SalesRetail": {
+                  let cell = tr.insertCell();
+                  cell.style.padding = "12px 15px";
 
-               let cellValue = `
+                  let cellValue = `
                            ${
                               promotion["adzone4SalesRetail"]
                                  ? _formatCurrencyWithVersion(
@@ -304,18 +295,19 @@ import { promotions, headerInfo } from "./data.js";
                                  : ""
                            }
                        `;
-               cell.innerHTML = cellValue;
+                  cell.innerHTML = cellValue;
 
-               break;
+                  break;
+               }
+
+               default:
+                  break;
             }
-
-            default:
-               break;
-         }
+         });
       });
-   });
 
-   table.appendChild(tbody);
+      table.appendChild(tbody);
+   });
 
    // Add table to container...
    let divContainer = document.getElementById("showData");
@@ -383,4 +375,17 @@ function _sumOfProjectedRetail(eventName) {
    }, 0);
 
    return _formatCurrency(sum);
+}
+
+function _groupByEvent(promotions, key) {
+   let groupedByEvents = promotions.reduce(
+      (consolidatedPromotion, promotion) => {
+         (consolidatedPromotion[promotion[key]] =
+            consolidatedPromotion[promotion[key]] || []).push(promotion);
+         return consolidatedPromotion;
+      },
+      {}
+   );
+
+   return groupedByEvents;
 }

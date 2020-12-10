@@ -45,7 +45,7 @@ export let promotions = [
       adzone1SalesRetail: "1.99",
       adzone2SalesRetail: "2.19",
       adzone3SalesRetail: "2.49",
-      eventName: "Adzone Details",
+      eventName: "Easter Locked in Savings",
    },
    {
       id: 4,
@@ -61,7 +61,7 @@ export let promotions = [
       adzone1SalesRetail: "1.00",
       adzone2SalesRetail: "1.00",
       adzone3SalesRetail: "1.00",
-      eventName: "Front Page",
+      eventName: "Easter Locked in Savings",
    },
 ];
 
