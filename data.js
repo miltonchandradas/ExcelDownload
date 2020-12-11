@@ -14,7 +14,10 @@ export let promotions = [
       adzone2Discount: "0.70",
       adzone3SalesRetail: "2.69",
       adzone3Discount: "0.70",
+      adzone4SalesRetail: "2.89",
+      adzone4Discount: "0.70",
       eventName: "Front Page",
+      numberOfAdzones: "4",
    },
    {
       id: 2,
@@ -33,7 +36,10 @@ export let promotions = [
       adzone2Discount: "0.33",
       adzone3SalesRetail: "1.83",
       adzone3Discount: "0.33",
+      adzone4SalesRetail: "1.83",
+      adzone4Discount: "0.33",
       eventName: "Front Page",
+      numberOfAdzones: "4",
    },
    {
       id: 3,
@@ -45,7 +51,9 @@ export let promotions = [
       adzone1SalesRetail: "1.99",
       adzone2SalesRetail: "2.19",
       adzone3SalesRetail: "2.49",
+      adzone4SalesRetail: "2.49",
       eventName: "Easter Locked in Savings",
+      numberOfAdzones: "4",
    },
    {
       id: 4,
@@ -61,7 +69,9 @@ export let promotions = [
       adzone1SalesRetail: "1.00",
       adzone2SalesRetail: "1.00",
       adzone3SalesRetail: "1.00",
+      adzone4SalesRetail: "1.00",
       eventName: "Easter Locked in Savings",
+      numberOfAdzones: "4",
    },
 ];
 

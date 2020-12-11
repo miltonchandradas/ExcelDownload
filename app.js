@@ -3,18 +3,16 @@ import { promotions, headerInfo } from "./data.js";
 (function createTableFromJSON() {
    _checkVersions(promotions);
    let groupedByEvents = _groupByEvent(promotions, "eventName");
+   let numberOfAdzones = promotions[0].numberOfAdzones;
    console.log(groupedByEvents);
 
    let promotionProperties = Object.keys(promotions[0]);
 
-   let columnHeaders = [
-      "AdCopy Detail",
-      "Proj Retail",
-      "Additional Coupons",
-      "Adzone 1",
-      "Adzone 2",
-      "Adzone 3",
-   ];
+   let columnHeaders = ["AdCopy Detail", "Proj Retail", "Additional Coupons"];
+
+   for (let i = 0; i < numberOfAdzones; i++) {
+      columnHeaders.push("Adzone " + (i + 1));
+   }
    console.log(columnHeaders);
 
    // Create dynamic HTML table
@@ -152,25 +150,25 @@ import { promotions, headerInfo } from "./data.js";
 
                   let cellValue = `
                          ${
-                            promotion["adzone1SalesRetail"]
+                            promotion[`adzone1SalesRetail`]
                                ? _formatCurrency(
-                                    promotion["adzone1SalesRetail"]
+                                    promotion[`adzone1SalesRetail`]
                                  ) + "<br>"
                                : ""
                          }
                          ${
-                            promotion["adzone1Discount"]
+                            promotion[`adzone1Discount`]
                                ? "<span style='color:red;text-decoration:underline;vertical-align:middle;'>" +
-                                 _formatCurrency(promotion["adzone1Discount"]) +
+                                 _formatCurrency(promotion[`adzone1Discount`]) +
                                  "</span>"
                                : ""
                          }
                          ${
-                            promotion["adzone1Discount"]
+                            promotion[`adzone1Discount`]
                                ? "<br>" +
                                  _finalPrice(
-                                    promotion["adzone1SalesRetail"],
-                                    promotion["adzone1Discount"]
+                                    promotion[`adzone1SalesRetail`],
+                                    promotion[`adzone1Discount`]
                                  )
                                : ""
                          }
@@ -180,38 +178,51 @@ import { promotions, headerInfo } from "./data.js";
                   break;
                }
 
-               case "adzone2SalesRetail": {
+               case "adzone2SalesRetail":
+               case "adzone3SalesRetail":
+               case "adzone4SalesRetail": {
                   let cell = tr.insertCell();
                   cell.style.padding = "12px 15px";
                   cell.style.textAlign = "center";
                   cell.style.verticalAlign = "middle";
                   cell.style.border = "1px solid black";
 
+                  let adzoneNumber = promotionProperty.replace(
+                     /adzone|SalesRetail/gi,
+                     ""
+                  );
+
+                  console.log("Adzone Number: ", adzoneNumber);
+
                   let cellValue = `
                           ${
-                             promotion["adzone2SalesRetail"]
+                             promotion[`adzone${adzoneNumber}SalesRetail`]
                                 ? _formatCurrencyWithVersion(
-                                     promotion["adzone2SalesRetail"],
-                                     promotion["adzone2Version"],
+                                     promotion[
+                                        `adzone${adzoneNumber}SalesRetail`
+                                     ],
+                                     promotion[`adzone${adzoneNumber}Version`],
                                      cell
                                   ) + "<br>"
                                 : ""
                           }
                           ${
-                             promotion["adzone2Discount"]
+                             promotion[`adzone${adzoneNumber}Discount`]
                                 ? "<span style='color:red;text-decoration:underline;vertical-align:middle;'>" +
                                   _formatCurrency(
-                                     promotion["adzone2Discount"]
+                                     promotion[`adzone${adzoneNumber}Discount`]
                                   ) +
                                   "</span>"
                                 : ""
                           }
                           ${
-                             promotion["adzone2Discount"]
+                             promotion[`adzone${adzoneNumber}Discount`]
                                 ? "<br>" +
                                   _finalPrice(
-                                     promotion["adzone2SalesRetail"],
-                                     promotion["adzone2Discount"]
+                                     promotion[
+                                        `adzone${adzoneNumber}SalesRetail`
+                                     ],
+                                     promotion[`adzone${adzoneNumber}Discount`]
                                   )
                                 : ""
                           }
@@ -221,7 +232,7 @@ import { promotions, headerInfo } from "./data.js";
                   break;
                }
 
-               case "adzone3SalesRetail": {
+               /* case "adzone3SalesRetail": {
                   let cell = tr.insertCell();
                   cell.style.padding = "12px 15px";
                   cell.style.textAlign = "center";
@@ -261,7 +272,7 @@ import { promotions, headerInfo } from "./data.js";
 
                   break;
                }
-
+ 
                case "adzone4SalesRetail": {
                   let cell = tr.insertCell();
                   cell.style.padding = "12px 15px";
@@ -299,6 +310,8 @@ import { promotions, headerInfo } from "./data.js";
 
                   break;
                }
+
+               */
 
                default:
                   break;
@@ -348,17 +361,16 @@ function _finalPrice(sValue1, sValue2) {
 }
 
 function _checkVersions(promotions) {
-   let promotionsWithVersions = promotions.map((promotion) => {
-      if (promotion.adzone1SalesRetail !== promotion.adzone2SalesRetail) {
-         promotion.adzone2Version = true;
-      } else {
-         promotion.adzone2Version = false;
-      }
+   promotions.map((promotion) => {
+      let adzone1SalesRetail = promotion.adzone1SalesRetail;
+      let numberOfAdzones = promotions[0].numberOfAdzones;
 
-      if (promotion.adzone1SalesRetail !== promotion.adzone3SalesRetail) {
-         promotion.adzone3Version = true;
-      } else {
-         promotion.adzone3Version = false;
+      for (let i = 2; i < numberOfAdzones + 1; i++) {
+         if (adzone1SalesRetail !== promotion[`adzone${i}SalesRetail`]) {
+            promotion[`adzone${i}Version`] = true;
+         } else {
+            promotion[`adzone${i}Version`] = false;
+         }
       }
 
       return promotion;
