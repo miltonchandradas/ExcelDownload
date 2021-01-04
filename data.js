@@ -14,7 +14,7 @@ export let promotions = [
       adzone2Discount: "0.70",
       adzone3SalesRetail: "2.69",
       adzone3Discount: "0.70",
-      adzone4SalesRetail: "2.89",
+      adzone4SalesRetail: "2.79",
       adzone4Discount: "0.70",
       eventName: "Front Page",
       numberOfAdzones: "4",
