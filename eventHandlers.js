@@ -33,7 +33,7 @@ function exportFrontpageProjections(tableID, filename = "") {
 }
  */
 
-function exportFrontpageProjectionsRawHTML(filename = "") {
+function exportFrontpageProjectionsRawHTML() {
    let downloadLink;
    let dataType = "application/vnd.ms-excel";
 
@@ -41,7 +41,7 @@ function exportFrontpageProjectionsRawHTML(filename = "") {
    let tableHTML = table.outerHTML.replace(/ /g, "%20");
 
    // Specify file name
-   filename = filename ? filename + ".xls" : "frontpage.xls";
+   let filename = "frontpage.xls";
 
    // Create download link element
    downloadLink = document.createElement("a");
@@ -65,6 +65,6 @@ function exportFrontpageProjectionsRawHTML(filename = "") {
    }
 }
 
-/* document
+document
    .querySelector(".content-button")
-   .addEventListener("click", exportFrontpageProjectionsRawHTML("frontpage")); */
+   .addEventListener("click", exportFrontpageProjectionsRawHTML);
