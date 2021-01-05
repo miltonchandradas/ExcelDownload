@@ -1,7 +1,6 @@
 import { promotions, headerInfo } from "./data.js";
 
 export const createTableObject = () => {
-
    _checkVersions(promotions);
    let groupedByEvents = _groupByEvent(promotions, "eventName");
    let numberOfAdzones = promotions[0].numberOfAdzones;
@@ -19,8 +18,11 @@ export const createTableObject = () => {
    // Create dynamic HTML table
    let table = document.createElement("table");
    table.id = "tblFrontpage";
+   /* table.style.cssText =
+      "margin: 25px 0; font-family: sans-serif; font-size: 0.9em; min-width: 400px; border: 1px solid black; border-radius: 5px 5px 0 0; overflow: hidden; box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);";*/
+
    table.style.cssText =
-      "margin: 25px 0; font-family: sans-serif; font-size: 0.9em; min-width: 400px; border: 1px solid black; border-radius: 5px 5px 0 0; overflow: hidden; box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);";
+      "font-family: sans-serif; font-size: 0.9em; border: 1px solid black;";
 
    // Add the header information on top...  Just 4 fields based on discussions with Wakefern
    let headerTbody = document.createElement("tbody");
@@ -55,6 +57,7 @@ export const createTableObject = () => {
    columnHeaders.forEach((header) => {
       let th = document.createElement("th");
       th.innerHTML = header;
+      th.style.margin = "15px";
       th.style.padding = "12px 15px";
       tr.appendChild(th);
    });
@@ -242,9 +245,13 @@ export const createTableObject = () => {
       table.appendChild(tbody);
    });
 
+   // Add table to container...
+   let body = document.getElementsByTagName("body")[0];
+   table.style.display = "none";
+   body.appendChild(table);
 
    return table;
-} 
+};
 
 /* (function createTableFromJSON() {
    _checkVersions(promotions);
@@ -566,3 +573,26 @@ function _groupByEvent(promotions, key) {
 
    return groupedByEvents;
 }
+
+document
+   .querySelector(".content-button")
+   .addEventListener("click", function () {
+      createTableObject();
+
+      let wb = XLSX.utils.table_to_book(
+         document.getElementById("tblFrontpage"),
+         { sheet: "Sheet JS" }
+      );
+      let wbout = XLSX.write(wb, {
+         bookType: "xlsx",
+         bookSST: true,
+         type: "binary",
+         cellStyles: true,
+      });
+      saveAs(
+         new Blob([s2ab(wbout)], {
+            type: "application/vnd.ms-excel",
+         }),
+         "frontpage.xlsx"
+      );
+   });

@@ -13,5 +13,23 @@
 
       <script src="eventHandlers.js" type="module"></script>
 
+      <script src="lib/xlsx.full.min.js"></script>
+      <script src="lib/FileSaver.min.js"></script>
+
+      <script>    
+
+         function s2ab(s) {
+            
+
+              let buf = new ArrayBuffer(s.length);
+              let view = new Uint8Array(buf);
+              for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+              return buf;
+         }
+
+         
+            
+      </script>
+
    </body>
 </html>

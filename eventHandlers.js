@@ -36,6 +36,8 @@ function exportFrontpageProjections(tableID, filename = "") {
 function exportFrontpageProjectionsRawHTML() {
    let downloadLink;
    let dataType = "application/vnd.ms-excel";
+   /* let dataType =
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"; */
 
    let table = createTableObject();
    let tableHTML = table.outerHTML.replace(/ /g, "%20");
@@ -65,6 +67,6 @@ function exportFrontpageProjectionsRawHTML() {
    }
 }
 
-document
+/* document
    .querySelector(".content-button")
-   .addEventListener("click", exportFrontpageProjectionsRawHTML);
+   .addEventListener("click", exportFrontpageProjectionsRawHTML); */
