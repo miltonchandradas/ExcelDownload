@@ -18,8 +18,10 @@ export const createTableObject = () => {
    // Create dynamic HTML table
    let table = document.createElement("table");
    table.id = "tblFrontpage";
+   /* table.style.cssText =
+      "margin: 25px 0; font-family: sans-serif; font-size: 0.9em; min-width: 400px; border: 1px solid black; border-radius: 5px 5px 0 0; overflow: hidden; box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);"; */
    table.style.cssText =
-      "margin: 25px 0; font-family: sans-serif; font-size: 0.9em; min-width: 400px; border: 1px solid black; border-radius: 5px 5px 0 0; overflow: hidden; box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);";
+      "font-family: sans-serif; font-size: 0.9em; border: 1px solid black;";
 
    // Add the header information on top...  Just 4 fields based on discussions with Wakefern
    let headerTbody = document.createElement("tbody");
