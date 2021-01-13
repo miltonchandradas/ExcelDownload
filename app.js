@@ -1,7 +1,6 @@
 import { promotions, headerInfo } from "./data.js";
 
 export const createTableObject = () => {
-
    _checkVersions(promotions);
    let groupedByEvents = _groupByEvent(promotions, "eventName");
    let numberOfAdzones = promotions[0].numberOfAdzones;
@@ -242,9 +241,13 @@ export const createTableObject = () => {
       table.appendChild(tbody);
    });
 
+   // Add table to container...  Just for display purposes
+   let divContainer = document.getElementById("showData");
+   divContainer.innerHTML = "";
+   divContainer.appendChild(table);
 
    return table;
-} 
+};
 
 /* (function createTableFromJSON() {
    _checkVersions(promotions);
