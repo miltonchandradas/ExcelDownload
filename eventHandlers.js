@@ -1,47 +1,14 @@
-import { createTableObject } from "./app.js";
+import { createAdzoneTable, createBlowlineTable } from "./app.js";
 
-/* 
-function exportFrontpageProjections(tableID, filename = "") {
-   let downloadLink;
-   let dataType = "application/vnd.ms-excel";
-   let tableSelect = document.getElementById(tableID);
-   let tableHTML = tableSelect.outerHTML.replace(/ /g, "%20");
-
-   // Specify file name
-   filename = filename ? filename + ".xls" : "frontpage.xls";
-
-   // Create download link element
-   downloadLink = document.createElement("a");
-
-   document.body.appendChild(downloadLink);
-
-   if (navigator.msSaveOrOpenBlob) {
-      let blob = new Blob(["\ufeff", tableHTML], {
-         type: dataType,
-      });
-      navigator.msSaveOrOpenBlob(blob, filename);
-   } else {
-      // Create a link to the file
-      downloadLink.href = "data:" + dataType + ", " + tableHTML;
-
-      // Setting the file name
-      downloadLink.download = filename;
-
-      //triggering the function
-      downloadLink.click();
-   }
-}
- */
-
-function exportFrontpageProjectionsRawHTML() {
+function downloadAdzones() {
    let downloadLink;
    let dataType = "application/vnd.ms-excel";
 
-   let table = createTableObject();
+   let table = createAdzoneTable();
    let tableHTML = table.outerHTML.replace(/ /g, "%20");
 
    // Specify file name
-   let filename = "frontpage.xls";
+   let filename = "adzones.xls";
 
    // Create download link element
    downloadLink = document.createElement("a");
@@ -65,6 +32,40 @@ function exportFrontpageProjectionsRawHTML() {
    }
 }
 
+function downloadBlowlines() {
+   let downloadLink;
+   let dataType = "application/vnd.ms-excel";
+
+   let table = createBlowlineTable();
+   let tableHTML = table.outerHTML.replace(/ /g, "%20");
+
+   // Specify file name
+   let filename = "blowlines.xls";
+
+   // Create download link element
+   downloadLink = document.createElement("a");
+
+   document.body.appendChild(downloadLink);
+
+   if (navigator.msSaveOrOpenBlob) {
+      let blob = new Blob(["\ufeff", tableHTML], {
+         type: dataType,
+      });
+      navigator.msSaveOrOpenBlob(blob, filename);
+   } else {
+      // Create a link to the file
+      downloadLink.href = "data:" + dataType + ", " + tableHTML;
+
+      // Setting the file name
+      downloadLink.download = filename;
+
+      //triggering the function
+      downloadLink.click();
+   }
+}
+
+document.querySelector("#btnAdzone").addEventListener("click", downloadAdzones);
+
 document
-   .querySelector(".content-button")
-   .addEventListener("click", exportFrontpageProjectionsRawHTML);
+   .querySelector("#btnBlowline")
+   .addEventListener("click", downloadBlowlines);
