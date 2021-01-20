@@ -22,7 +22,7 @@ export const createBlowlineTable = () => {
    table.id = "tblBlowlines";
 
    table.style.cssText =
-      "font-family: sans-serif; font-size: 0.9em; border: 1px solid black;";
+      "font-family: sans-serif; font-size: 0.9em; border: 1px solid lightgrey;";
 
    // Add the header information on top...  Just 4 fields based on discussions with Wakefern
    let headerTbody = document.createElement("tbody");
@@ -40,6 +40,9 @@ export const createBlowlineTable = () => {
    headerCell4.innerHTML = `Projected Sales: ${_formatCurrency(
       blowlineHeaders.projectedSales
    )}`;
+   headerTr = headerTbody.insertRow();
+   let headerCell5 = headerTr.insertCell();
+   headerCell5.style.height = "20px";
    table.appendChild(headerTbody);
 
    // Add a new row for the column headers
@@ -64,6 +67,8 @@ export const createBlowlineTable = () => {
       let groupTr = groupTbody.insertRow();
       let groupCell = groupTr.insertCell();
       groupCell.style.backgroundColor = "#e9f5f8";
+      groupCell.style.height = "40px";
+      groupCell.style.verticalAlign = "middle";
 
       groupCell.innerHTML = `${
          promotionsByEvent[0].eventName
@@ -226,7 +231,7 @@ export const createAdzoneTable = () => {
    /* table.style.cssText =
       "margin: 25px 0; font-family: sans-serif; font-size: 0.9em; min-width: 400px; border: 1px solid black; border-radius: 5px 5px 0 0; overflow: hidden; box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);"; */
    table.style.cssText =
-      "font-family: sans-serif; font-size: 0.9em; border: 1px solid black;";
+      "font-family: sans-serif; font-size: 0.9em; border: 1px solid lightgrey;";
 
    // Add the header information on top...  Just 4 fields based on discussions with Wakefern
    let headerTbody = document.createElement("tbody");
@@ -274,6 +279,7 @@ export const createAdzoneTable = () => {
       groupCell.innerHTML = `${
          promotionsByEvent[0].eventName
       }: <b>${_sumOfProjectedRetail(promotionsByEvent)}</b>`;
+      groupCell.style.height = "40px";
       table.appendChild(groupTbody);
 
       // Add JSON data as rows to the table
@@ -486,10 +492,10 @@ export const createAdzoneTable = () => {
 
 function _setCellStyle(cell, alignCenter) {
    cell.style.padding = "12px 15px";
-   cell.style.border = "1px solid black";
+   cell.style.border = "1px solid lightgrey";
 
    if (alignCenter) {
-      cell.style.textAlign = "center";
+      cell.style.textAlign = "right";
       cell.style.verticalAlign = "middle";
    }
 }

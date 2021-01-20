@@ -6,7 +6,7 @@ export const blowlines = [
       digitalcoupon: 0,
       mixnmatch: 0,
       finalRetail: 1.99,
-      eventName: "Front Page",
+      eventName: "Event A",
    },
    {
       adcopyDetail: "Betty Crocker Delights Cake Mix or Frosting",
@@ -15,7 +15,7 @@ export const blowlines = [
       digitalcoupon: 0,
       mixnmatch: 0,
       finalRetail: 1.5,
-      eventName: "Front Page",
+      eventName: "Event A",
    },
    {
       adcopyDetail: "Bounce Fabric Softener Sheets",
@@ -24,7 +24,7 @@ export const blowlines = [
       digitalcoupon: 0,
       mixnmatch: 0,
       finalRetail: 1.99,
-      eventName: "Front Page",
+      eventName: "Event A",
    },
    {
       adcopyDetail: "Chock Full of Nuts Ground Coffee",
@@ -33,7 +33,7 @@ export const blowlines = [
       digitalcoupon: 0,
       mixnmatch: 0,
       finalRetail: 5.99,
-      eventName: "Easter Locked In Savings",
+      eventName: "Event B",
    },
    {
       adcopyDetail: "Bonzoni Lasagna",
@@ -42,7 +42,7 @@ export const blowlines = [
       digitalcoupon: 0,
       mixnmatch: 0,
       finalRetail: 0.99,
-      eventName: "Easter Locked In Savings",
+      eventName: "Event B",
    },
 ];
 
